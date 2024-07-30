@@ -14,3 +14,6 @@ To get started, clone the repository and install the required dependencies. Deta
 
 Contributions are welcome to enhance the functionality and performance of PyCompressor. If you have suggestions, bug reports, or feature requests, please create an issue or submit a pull request. This project is licensed under the MIT License.
 
+
+
+

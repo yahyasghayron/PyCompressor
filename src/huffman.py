@@ -16,7 +16,7 @@ class HeapNode:
 
 class HuffmanCoding:
 
-    def __init__(self, data):
+    def __init__(self):
         self.codes = {}
         self.reverse_mapping = {}
 

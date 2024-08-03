@@ -35,8 +35,8 @@ class HuffmanCoding:
 
     def build_heap(self , frequency):
         heap = []
-        for key, value in frequency:
-            heapq.heappush(heap, HeapNode(key, value))
+        for key  in frequency:
+            heapq.heappush(heap, HeapNode(key, frequency[key]))
         return heap
 
 
@@ -72,6 +72,7 @@ class HuffmanCoding:
 
     def compress(self, text):
         frequency = self.create_frequency_table(text)
+        print(frequency)
         heap = self.build_heap(frequency)
         root = self.merge_nodes(heap)
         self.build_codes(root)
@@ -92,4 +93,9 @@ class HuffmanCoding:
 
 if __name__ == "__main__":
     # Test your implementation here
-    pass
+    test = "The bird is the word"
+    huffman = HuffmanCoding()
+    compressed_text = huffman.compress(test)
+    print("Compressed text:", compressed_text)
+    decompressed_text = huffman.decompress(compressed_text)
+    print("Decompressed text:", decompressed_text)

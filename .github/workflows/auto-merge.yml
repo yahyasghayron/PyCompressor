@@ -28,12 +28,12 @@ jobs:
           git pull origin master
           git merge --no-ff --allow-unrelated-histories origin/dev -m "Merge branch dev into master" || true
 
-      - name: Handle merge conflicts
+      - name: Create Pull Request for Conflicts
         if: failure()
         run: |
           git status
-          git merge --abort || true
-          echo "Merge conflict or error occurred. Please resolve conflicts manually."
+          echo "Conflicts detected. Creating a pull request for manual resolution."
+          gh pr create --base master --head dev --title "Resolve merge conflicts between dev and master" --body "This PR resolves conflicts between the dev and master branches."
 
       - name: Push changes to master
         if: success()

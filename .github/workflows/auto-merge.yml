@@ -19,16 +19,12 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Fetch all branches
-        run: git fetch --all
-
       - name: Merge dev into master
         run: |
           git checkout master
           git pull origin master
           if git merge --no-ff --allow-unrelated-histories origin/dev -m "Merge branch dev into master"; then
             echo "Merge successful for branch dev. Deleting branch dev..."
-            git push origin --delete dev
             git push origin master
           else
             echo "Merge conflict or error occurred for branch dev. Skipping..."

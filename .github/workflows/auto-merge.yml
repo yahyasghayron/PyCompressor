@@ -3,34 +3,34 @@ name: Auto Merge Dev to Master
 on:
   push:
     branches:
-      - master
+      - dev
+
 jobs:
   merge-branches:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+
       - name: Set up Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Fetch all branches
         run: git fetch --all
-      - name: Merge branches into master
+
+      - name: Merge dev into master
         run: |
-          BRANCHES=$(git branch -r | grep -v '\->' | grep -v 'master' | sed 's/origin\///')
-          for branch in $BRANCHES; do
-            CURRENT_BRANCH=$(git branch --show-current)
-            if [ "$CURRENT_BRANCH" != "master" ]; then
-              git checkout master
-            fi
-            git pull origin master
-            if git merge --no-ff --allow-unrelated-histories origin/$branch -m "Merge branch '$branch' into master"; then
-              echo "Merge successful for branch $branch. Deleting branch $branch..."
-              git push origin --delete $branch
-              git push origin master
-            else
-              echo "Merge conflict or error occurred for branch $branch. Skipping..."
-              git merge --abort
-            fi
-          done
+          git checkout master
+          git pull origin master
+          if git merge --no-ff --allow-unrelated-histories origin/dev -m "Merge branch dev into master"; then
+            echo "Merge successful for branch dev. Deleting branch dev..."
+            git push origin --delete dev
+            git push origin master
+          else
+            echo "Merge conflict or error occurred for branch dev. Skipping..."
+            git merge --abort
+

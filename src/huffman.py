@@ -72,7 +72,6 @@ class HuffmanCoding:
 
     def compress(self, text):
         frequency = self.create_frequency_table(text)
-        print(frequency)
         heap = self.build_heap(frequency)
         root = self.merge_nodes(heap)
         self.build_codes(root)

@@ -24,7 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          git checkout master
+          git checkout origin/master
           git merge dev --no-ff
           git push origin master
 

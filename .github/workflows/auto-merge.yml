@@ -30,6 +30,8 @@ jobs:
 
       - name: Create Pull Request for Conflicts
         if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git status
           echo "Conflicts detected. Creating a pull request for manual resolution."

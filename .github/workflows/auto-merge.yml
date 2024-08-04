@@ -29,7 +29,7 @@ jobs:
 
       - name: Merge dev into master
         run: |
-          git merge --no-ff --strategy-option theirs origin/dev 
+          git merge --strategy-option theirs origin/dev 
 
       - name: Push changes
         run: |

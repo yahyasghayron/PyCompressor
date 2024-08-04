@@ -19,6 +19,10 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: featch all branches
+        run : |
+          git fetch --all
+      
       - name: Merge dev into master
         run: |
           git checkout master

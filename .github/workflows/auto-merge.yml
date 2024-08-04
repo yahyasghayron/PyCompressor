@@ -33,4 +33,5 @@ jobs:
           else
             echo "Merge conflict or error occurred for branch dev. Skipping..."
             git merge --abort
+          fi
 

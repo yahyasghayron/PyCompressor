@@ -22,23 +22,23 @@ jobs:
       - name: Fetch all branches
         run: git fetch --all
 
-      - name: Merge dev into master
+      - name: Checkout master branch
         run: |
           git checkout master
           git pull origin master
-          git merge --no-ff --allow-unrelated-histories origin/dev -m "Merge branch dev into master"
 
-      - name: Create Pull Request for Conflicts
+      - name: Merge dev into master
+        run: |
+          git merge --no-ff --strategy-option theirs origin/dev 
+
+      - name: Push changes
+        run: |
+          git push origin master
+
+      - name: Create Pull Request for Manual Review (if needed)
         if: failure()
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          git status
-          echo "Conflicts detected. Creating a pull request for manual resolution."
           gh pr create --base master --head dev --title "Resolve merge conflicts between dev and master" --body "This PR resolves conflicts between the dev and master branches."
-
-      - name: Push changes to master
-        if: success()
-        run: |
-          git push origin master
 

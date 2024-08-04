@@ -26,12 +26,19 @@ jobs:
         run: |
           git checkout master
           git pull origin master
-          if git merge --no-ff --allow-unrelated-histories origin/dev -m "Merge branch dev into master"; then
-            echo "Merge successful for branch dev. Deleting branch dev..."
-            git push origin --delete dev
-            git push origin master
-          else
-            echo "Merge conflict or error occurred for branch dev. Skipping..."
-            git merge --abort
-          fi
+          git merge --no-ff --allow-unrelated-histories origin/dev -m "Merge branch dev into master"
+
+      - name: Create Pull Request for Conflicts
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          git status
+          echo "Conflicts detected. Creating a pull request for manual resolution."
+          gh pr create --base master --head dev --title "Resolve merge conflicts between dev and master" --body "This PR resolves conflicts between the dev and master branches."
+
+      - name: Push changes to master
+        if: success()
+        run: |
+          git push origin master
 
